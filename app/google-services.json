@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1031808551134",
+    "firebase_url": "https://contact-tracing-2fbc1.firebaseio.com",
+    "project_id": "contact-tracing-2fbc1",
+    "storage_bucket": "contact-tracing-2fbc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031808551134:android:cbade0f684e21b7a6c1a4f",
+        "android_client_info": {
+          "package_name": "com.example.contact_tracing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031808551134-i9kkfpdvol0pp3a3b7bdfb8grlcbkamn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.contact_tracing",
+            "certificate_hash": "15ba4e7275de6e022da9de4a12736e6e74833c84"
+          }
+        },
+        {
+          "client_id": "1031808551134-3tk67asr6a1ukandej2ga3ji6qtm7ipb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ13BnE-3nS22KlXvhn1M9Hl0b430Tc68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031808551134-3tk67asr6a1ukandej2ga3ji6qtm7ipb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

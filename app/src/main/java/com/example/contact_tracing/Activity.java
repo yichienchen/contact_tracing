@@ -43,7 +43,7 @@ import static com.example.contact_tracing.Service_Scan.stopScanning;
 
 
 public class Activity extends AppCompatActivity {
-    static int ManufacturerData_size = 24 - 3;  //ManufacturerData長度
+    static int ManufacturerData_size = 24;  //ManufacturerData長度
     static String TAG = "chien";
     static long contant_time_limit = 5*60; //5分鐘
 

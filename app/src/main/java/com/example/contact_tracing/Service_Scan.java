@@ -25,6 +25,7 @@ import static com.example.contact_tracing.Activity.mean_total;
 import static com.example.contact_tracing.Activity.num_total;
 import static com.example.contact_tracing.Activity.time_interval;
 import static com.example.contact_tracing.Activity.time_previous;
+import static com.example.contact_tracing.Function.byte2HexStr;
 import static com.example.contact_tracing.Service_scan_function.leScanCallback;
 import static com.example.contact_tracing.Service_scan_function.received_time;
 import static com.example.contact_tracing.Service_scan_function.received_time_Calendar;
@@ -95,19 +96,19 @@ public class Service_Scan extends Service {
         btn_service.setVisibility(View.INVISIBLE);
         btn_service_stop.setVisibility(View.VISIBLE);
 
-        StringBuilder data = new StringBuilder("0");
-        for(int j=data.length();(j+id_byte.length)%ManufacturerData_size!=0;j++){
-            data.append("0");
-        }
 
-        byte[] data_all = new byte[id_byte.length + data.toString().getBytes().length];
+//        0x0209311BFFFFFF01226C74524A5F2D33353539343430393234393831323030
+
+        byte[] data_all = new byte[ManufacturerData_size];
         System.arraycopy(id_byte, 0, data_all, 1, id_byte.length);
-        System.arraycopy(data.toString().getBytes(), 0, data_all, id_byte.length, data.toString().getBytes().length);
+
+//        System.arraycopy(data.toString().getBytes(), 0, data_all, id_byte.length, data.length());
         // ManufacturerData : packet編號(1) + id(4) + data(19)
 
-        byte[] data_mask = new byte[] {0x00,0x11,0x11,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-//        Log.e(TAG,"data_all: "+ byte2HexStr(data_all)+"\n"
-//                +"data_mask: "+byte2HexStr(data_mask));
+        byte[] data_mask = new byte[] {0x00,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+        Log.e(TAG,"data_all: "+ byte2HexStr(data_all)+"\n"
+                +"data_mask: "+byte2HexStr(data_mask));
+
         ScanFilter UUID_Filter_M = new ScanFilter.Builder().setManufacturerData(0xffff,data_all,data_mask).build();
         ArrayList<ScanFilter> filters = new ArrayList<>();
         filters.add(UUID_Filter_M);

@@ -42,13 +42,13 @@ public class Receiver_BLE extends BroadcastReceiver {
                     NotificationChannel mChannel = new NotificationChannel("BLE" , "藍芽" , NotificationManager.IMPORTANCE_HIGH ) ;
                     Notification notification = new Notification.Builder(context,"BLE")
                             .setSmallIcon(R.drawable.ble)
-                            .setContentTitle("application")
-                            .setContentText("藍芽已關閉 請開啟藍芽")
+//                            .setContentTitle("application")
+                            .setContentText("Bluetooth had been turned off, please turn on the Bluetooth")
                             .setWhen(System.currentTimeMillis())
                             .setContentIntent(pendingIntent_BLE)
                             .build();
 
-                    notification.flags |= Notification.FLAG_ONGOING_EVENT;
+//                    notification.flags |= Notification.FLAG_ONGOING_EVENT;
                     mChannel.setImportance(NotificationManager.IMPORTANCE_HIGH);
                     notificationManager.createNotificationChannel(mChannel) ;
                     notificationManager.notify(1001, notification);

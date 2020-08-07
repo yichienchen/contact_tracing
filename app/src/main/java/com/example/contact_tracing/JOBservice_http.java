@@ -107,27 +107,26 @@ public class JOBservice_http extends JobService {
                     }
                 }
                 if(!index.isEmpty()){
-                    String text = "";
+                    StringBuilder text = new StringBuilder();
                     for (int c = 0;c<index.size();c++){
-                        text = text + imei.get(index.get(c)) + ",從" + time_1.get(index.get(c)) + " 到" + time_2.get(index.get(c)) ;
+                        text.append("from").append(time_1.get(index.get(c))).append(" to ").append(time_2.get(index.get(c))).append("\n");
                         if(c<index.size()-1){
-                            text = text + "\n";
+                            text.append("\n");
                         }
                     }
 
                     NotificationChannel mChannel = new NotificationChannel("Data_infected" , "接觸史" , NotificationManager.IMPORTANCE_HIGH) ;
                     Notification notification = new NotificationCompat.Builder(this,"Data_infected")
                             .setSmallIcon(R.drawable.ble)
-                            .setContentTitle("曾與確診者接觸")
-                            .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
-                            .setContentText(text)
+                            .setContentTitle("you have been contacted with the infected ")
+                            .setStyle(new NotificationCompat.BigTextStyle().bigText(text.toString()))
+                            .setContentText(text.toString())
                             .setWhen(System.currentTimeMillis())
                             .setShowWhen(true)
                             .setContentIntent(pendingIntent1)
 //                            .addAction(R.drawable.pig32,"save",pendingIntent1)
                             .build();
 
-                    //TODO 新增activity,查看接觸紀錄,是否會傳
                     mChannel.setImportance(NotificationManager.IMPORTANCE_HIGH);
                     notificationManager.createNotificationChannel(mChannel) ;
                     notificationManager.notify(1, notification);

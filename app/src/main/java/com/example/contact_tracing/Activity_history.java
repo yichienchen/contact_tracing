@@ -82,7 +82,7 @@ public class Activity_history extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 //                Toast.makeText(Activity_history.this , display(db , check_list_id.get(position)),Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Activity_history.this);
-                dialog.setTitle("接觸史");
+                dialog.setTitle("CONTACT HISTORY");
                 dialog.setMessage(display(db ,check_list_id.get(position)));
 
                 if(Integer.parseInt(get_detail(db,check_list_id.get(position),4))==1){
@@ -143,15 +143,17 @@ public class Activity_history extends AppCompatActivity {
             int is_contact = cursor.getInt(7);
 
             if (is_contact==1){
-                check = "had contacted";
+                check = "Had not uploaded to the server";
             }else if(is_contact==2) {
-                check = "had returned to server";
+                check = "Had already returned to the server";
             }
 
             if(ID.equals(id)){
-                data =  "USER ID: "+ user_id + "\n" +
-                        "TIME: "+time_first +" ~ " + time_last + "\n" +
-                        "RSSI: " + rssi_1 + "," + rssi_2 + "," + rssi_3 +  "\n" +
+//                data =  "USER ID: "+ user_id + "\n" +
+//                        "TIME: "+time_first +" ~ " + time_last + "\n" +
+//                        "RSSI: " + rssi_1 + "," + rssi_2 + "," + rssi_3 +  "\n" +
+//                        "STATUS: "+ check;
+                data =  "TIME: "+time_first +" ~ " + time_last + "\n" +
                         "STATUS: "+ check;
             }
         }

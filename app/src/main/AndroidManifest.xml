@@ -24,10 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".FcmInstancelIDService"
-            android:enabled="true"
-            android:exported="true"></service>
+<!--        <service-->
+<!--            android:name=".FcmInstancelIDService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true"></service>-->
 
         <activity android:name=".Activity_history" />
 

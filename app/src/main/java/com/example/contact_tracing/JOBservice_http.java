@@ -32,6 +32,7 @@ import static com.example.contact_tracing.Activity.TAG;
 import static com.example.contact_tracing.Activity.notificationManager;
 import static com.example.contact_tracing.DBHelper.TB1;
 
+//定時向server取得最新確診者資料
 public class JOBservice_http extends JobService {
     OkHttpClient client = new OkHttpClient();
 
@@ -66,15 +67,6 @@ public class JOBservice_http extends JobService {
             }
         });
         this.jobFinished(params,false);
-//        JobScheduler scheduler = (JobScheduler)getSystemService(Context.JOB_SCHEDULER_SERVICE);
-//        ComponentName componentName = new ComponentName(this, JOBservice_http.class);
-//
-//        JobInfo job = new JobInfo.Builder(1, componentName)
-//                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-//                .setPersisted(true) // 重開機後是否執行
-//                .build();
-////调用schedule
-//        scheduler.schedule(job);
         imei.clear();
         time_1.clear();
         time_2.clear();
@@ -139,6 +131,7 @@ public class JOBservice_http extends JobService {
 
     }
 
+    //比對使否有相符的接觸史
     private static void compare_database(String IMEI){
         Cursor cursor = db.query(TB1,new String[]{"_id","user_id","time_first","time_last","rssi_level_1","rssi_level_2","rssi_level_3","is_contact"},
                 null,null,null,null,null);
@@ -152,7 +145,6 @@ public class JOBservice_http extends JobService {
             time_first = cursor.getString(2);
             time_last = cursor.getString(3);
             is_contact = cursor.getInt(7);
-//            Log.e(TAG,id+". user_id:"+user_id);
             if(user_id.equals(IMEI)&&is_contact==0){
                 update(id);
                 Log.e(TAG,"contact IMEI: "+ user_id);
@@ -164,7 +156,8 @@ public class JOBservice_http extends JobService {
         cursor.close();
     }
 
-    private static void update(String id) { // 更新指定的資料
+    // 更新指定的資料
+    private static void update(String id) {
         SQLiteDatabase db = DH.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put("is_contact ", 1);

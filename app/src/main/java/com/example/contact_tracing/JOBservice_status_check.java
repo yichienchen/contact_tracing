@@ -22,7 +22,7 @@ import static com.example.contact_tracing.Activity.mBluetoothAdapter;
 import static com.example.contact_tracing.DBHelper.TB3;
 import static com.example.contact_tracing.Service_scan_function.format;
 
-
+//定時檢查app狀態
 public class JOBservice_status_check extends JobService {
     Calendar a = Calendar.getInstance();
     ArrayList<String> time_first = new ArrayList<>();
@@ -36,7 +36,6 @@ public class JOBservice_status_check extends JobService {
         String time = format.format(a.getTime());
 
         SQLiteDatabase db = DH.getWritableDatabase();
-//        db.delete(TB3, null, null);
         Cursor cursor = db.query(TB3,new String[]{"_id","time_first","time_last"},
                 null,null,null,null,null);
         if (cursor.moveToFirst()) {
@@ -46,8 +45,7 @@ public class JOBservice_status_check extends JobService {
                 cursor.moveToNext();
             }
         }
-//        Log.e(TAG,"time_first: "+time_first );
-//        Log.e(TAG,"time_last: "+time_last );
+
         cursor.close();
 
 
@@ -74,26 +72,6 @@ public class JOBservice_status_check extends JobService {
             }
         }
 
-
-        /*
-        if (table中沒有東西){
-        add first time
-        }else{
-            if (最新一列有沒有 last time){
-                if(現在時間和 first time 差多久<10){
-                    最新一列 add last time
-                }else{
-                    add new first time
-                }
-            }else{
-                if (現在時間和最新一列的 last time 差多久<10){
-                    update 最新一列的 last time
-                }else{
-                    add new first time
-                }
-            }
-        }
-        */
         this.jobFinished(params,true);
         JobScheduler scheduler = (JobScheduler)getSystemService(Context.JOB_SCHEDULER_SERVICE);
         ComponentName componentName1 = new ComponentName(this, JOBservice_status_check.class);
@@ -127,11 +105,7 @@ public class JOBservice_status_check extends JobService {
     private static void show(SQLiteDatabase db){
         Cursor cursor = db.query(TB3,new String[]{"_id","time_first","time_last"},
                 null,null,null,null,null);
-//        cursor.moveToLast();
-//        String _id = cursor.getString(0);
-//        String time_first = cursor.getString(1);
-//        String time_last = cursor.getString(2);
-//        Log.e(TAG,"TB3 id: " + _id + "\n" + "time_first: " + time_first + "\n" + "time_last: " + time_last);
+
         while(cursor.moveToNext()){
             String _id = cursor.getString(0);
             String time_first = cursor.getString(1);

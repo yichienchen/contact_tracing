@@ -45,10 +45,9 @@ import static com.example.contact_tracing.Service_Scan.stopScanning;
 
 public class Activity extends AppCompatActivity {
     static int ManufacturerData_size = 24;  //ManufacturerData長度
-    static String TAG = "chien";
-    static long contant_time_limit = 5*60; //5分鐘
+    static String TAG = "lab_605";
+    static long contact_time_limit = 5*60; //5分鐘
 
-    //static String Data_adv = "CHENYICHIENCHENYI123456sdbjfksdfjsbvjkabksdafs";
     static String Data_adv;
     static boolean version = false;  //true: 4.0 , false:5.0
     static byte[][] adv_seg_packet;
@@ -129,13 +128,7 @@ public class Activity extends AppCompatActivity {
         getDeviceImei();
         Data_adv = mDeviceIMEI;
 
-
-        @SuppressLint("WrongThread") String token = FirebaseInstanceId.getInstance().getId();
-        Log.e("FCM", "Token:"+token);
     }
-
-
-
 
     @Override
     public void onDestroy() {
@@ -143,14 +136,13 @@ public class Activity extends AppCompatActivity {
         unregisterReceiver(mBLEReceiver);
         stopService(adv_service);
         stopService(scan_service);
-        Log.e(TAG, "onDestroy() called");
         super.onDestroy();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onResume() {
         super.onResume();
-//        Log.e(TAG, "onResume() called");
         permission();
     }
 
@@ -210,14 +202,13 @@ public class Activity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public void permission() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-//        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 1);
-        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "!!!!!!!");
+            requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 10);
         }
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -246,6 +237,7 @@ public class Activity extends AppCompatActivity {
         btn_list = findViewById(R.id.btn_list);
 
         btn_service.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
                 Log.e(TAG,"service is started");
@@ -346,6 +338,7 @@ public class Activity extends AppCompatActivity {
         JobInfo job = new JobInfo.Builder(1, componentName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true) // 重開機後是否執行
+//                .setMinimumLatency(5*1000)
                 .setPeriodic(1000*60*60*8)
                 .build();
         JobInfo job1 = new JobInfo.Builder(2, componentName1)

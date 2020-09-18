@@ -3,7 +3,6 @@ package com.example.contact_tracing;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,11 +26,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static com.example.contact_tracing.Activity.DH;
+import static com.example.contact_tracing.Activity.TAG;
 import static com.example.contact_tracing.Activity.mDeviceIMEI;
 import static com.example.contact_tracing.Activity.toolbar;
 import static com.example.contact_tracing.DBHelper.TB1;
 import static com.example.contact_tracing.JOBservice_http.db;
-import static com.example.contact_tracing.Activity.TAG;
 
 
 public class Activity_history extends AppCompatActivity {
@@ -47,28 +45,14 @@ public class Activity_history extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-
         toolbar = findViewById(R.id.toolbar);
-//        toolbar.setSubtitle("CONTACT  TRACING");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
-
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-
-
-//        actionBar.setDisplayShowHomeEnabled(true);
-
         Log.e(TAG,"Activity_history");
-//        check_list_id.clear();
-//        check_list_time.clear();
-
         SQL_list = findViewById(R.id.SQL_list);
-
         initiate(db);
-
         listview();
 
     }
@@ -80,7 +64,6 @@ public class Activity_history extends AppCompatActivity {
         SQL_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//                Toast.makeText(Activity_history.this , display(db , check_list_id.get(position)),Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Activity_history.this);
                 dialog.setTitle("CONTACT HISTORY");
                 dialog.setMessage(display(db ,check_list_id.get(position)));
@@ -149,10 +132,7 @@ public class Activity_history extends AppCompatActivity {
             }
 
             if(ID.equals(id)){
-//                data =  "USER ID: "+ user_id + "\n" +
-//                        "TIME: "+time_first +" ~ " + time_last + "\n" +
-//                        "RSSI: " + rssi_1 + "," + rssi_2 + "," + rssi_3 +  "\n" +
-//                        "STATUS: "+ check;
+
                 data =  "TIME: "+time_first +" ~ " + time_last + "\n" +
                         "STATUS: "+ check;
             }
@@ -170,7 +150,6 @@ public class Activity_history extends AppCompatActivity {
     }
 
     private void http_header(final String id){
-//        Log.e(TAG,"http_header:" + id);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("http://140.114.26.89/")
@@ -189,7 +168,6 @@ public class Activity_history extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
-//                Log.e(TAG,"http_header result" + json);
                 Log.e(TAG,"http_header 成功 "+id);
             }
         });

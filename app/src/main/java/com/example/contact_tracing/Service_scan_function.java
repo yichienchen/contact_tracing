@@ -18,7 +18,7 @@ import static com.example.contact_tracing.Activity.TAG;
 import static com.example.contact_tracing.Activity.contact_time_first;
 import static com.example.contact_tracing.Activity.contact_time_imei;
 import static com.example.contact_tracing.Activity.contact_time_last;
-import static com.example.contact_tracing.Activity.contant_time_limit;
+import static com.example.contact_tracing.Activity.contact_time_limit;
 import static com.example.contact_tracing.Activity.list_device;
 import static com.example.contact_tracing.Activity.list_device_detail;
 import static com.example.contact_tracing.Activity.matrix;
@@ -31,8 +31,6 @@ import static com.example.contact_tracing.DBHelper.TB1;
 import static com.example.contact_tracing.Function.byte2HexStr;
 import static com.example.contact_tracing.Function.hexToAscii;
 
-
-//TODO 都是利用收到下一個封包當作觸發裝置
 public class Service_scan_function {
     private static SimpleDateFormat f = new SimpleDateFormat("YYYY-MM-dd,HH:mm:ss.SS");
     static SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd,HH:mm");
@@ -239,15 +237,6 @@ public class Service_scan_function {
             }
 
 
-//            Log.e(TAG,"matrix: "+"\n"
-//                    +matrix.get(0).toString()+"\n"
-//                    +matrix.get(1).toString()+"\n"
-//                    +matrix.get(2).toString()+"\n"
-//                    +matrix.get(3).toString()+"\n"
-//                    +matrix.get(4).toString()+"\n"
-//                    +matrix.get(5).toString()+"\n"
-//                    +matrix.get(6).toString()+"\n");
-
             //單一裝置time interval
             received_time_Calendar.add(a);
             received_time_interval.clear();
@@ -257,8 +246,7 @@ public class Service_scan_function {
                     received_time_interval.add(time_difference_(received_time_Calendar.get(i-1),received_time_Calendar.get(i)));
                 }
             }
-//            Log.e(TAG,"received_time_interval.length: "+received_time_interval.size());
-//            Log.e(TAG,"received_time_interval"+received_time_interval);
+
 
             /*-------------------------------------------------------interval END--------------------------------------------------------------------------*/
 
@@ -319,8 +307,7 @@ public class Service_scan_function {
             resultData.append("is check: ").append(is_contact);
             resultData.append("\n");
         }
-//        sql_Text.setText(resultData);
-//        sql_Text.setMovementMethod(new ScrollingMovementMethod()); //垂直滾動
+
         cursor.close();
     }
 
@@ -335,38 +322,18 @@ public class Service_scan_function {
         long hoursInMilli = minutesInMilli * 60;
         long daysInMilli = hoursInMilli * 24;
 
-        long elapsedDays = different / daysInMilli;
         different = different % daysInMilli;
-        long elapsedHours = different / hoursInMilli;
         different = different % hoursInMilli;
-        long elapsedMinutes = different / minutesInMilli;
         different = different % minutesInMilli;
-        long elapsedSeconds = different / secondsInMilli;
-//        Log.e(TAG,"different: "+elapsedDays +"days, " + elapsedHours + "hours, " + elapsedMinutes +"minutes, " + elapsedSeconds +"seconds. ");
+
         return different;
     }
 
     public static boolean time_difference(Calendar first, Calendar last){
         Date first_time = first.getTime();
         Date last_time = last.getTime();
-
         long different = last_time.getTime() - first_time.getTime();
-
-        long secondsInMilli = 1000;
-        long minutesInMilli = secondsInMilli * 60;
-        long hoursInMilli = minutesInMilli * 60;
-        long daysInMilli = hoursInMilli * 24;
-
-//        long elapsedDays = different / daysInMilli;
-//        different = different % daysInMilli;
-//        long elapsedHours = different / hoursInMilli;
-//        different = different % hoursInMilli;
-//        long elapsedMinutes = different / minutesInMilli;
-//        different = different % minutesInMilli;
-//        long elapsedSeconds = different / secondsInMilli;
-//        Log.e(TAG,"different: "+elapsedDays +"days, " + elapsedHours + "hours, " + elapsedMinutes +"minutes, " + elapsedSeconds +"seconds. ");
-
-        return different/1000<contant_time_limit;
+        return different/1000<contact_time_limit;  //10s
     }
 
     public static void clearTable(){

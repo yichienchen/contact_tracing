@@ -21,7 +21,7 @@ import static com.example.contact_tracing.Activity.time_bluetooth_off;
 import static com.example.contact_tracing.Activity.time_bluetooth_on;
 import static com.example.contact_tracing.Service_scan_function.format;
 
-
+//監聽手機藍芽狀態
 public class Receiver_BLE extends BroadcastReceiver {
 
     @Override
@@ -36,7 +36,6 @@ public class Receiver_BLE extends BroadcastReceiver {
             final int state = intent.getIntExtra(mBluetoothAdapter.EXTRA_STATE, mBluetoothAdapter.ERROR);
             switch(state) {
                 case BluetoothAdapter.STATE_TURNING_OFF: //STATE_TURNING_OFF
-//                    Log.e(TAG,"STATE_OFF");
                     time_bluetooth_off = Calendar.getInstance();
                     Log.e(TAG,"time_bluetooth_off: "+format.format(time_bluetooth_off.getTime()));
                     NotificationChannel mChannel = new NotificationChannel("BLE" , "藍芽" , NotificationManager.IMPORTANCE_HIGH ) ;

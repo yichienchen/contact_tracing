@@ -35,19 +35,7 @@ import static com.example.contact_tracing.Service_scan_function.received_time_in
 public class Service_Scan extends Service {
 
     public Service_Scan() {
-//        Log.e(TAG,"Service_Scan start");
         startScanning();
-//        btn_service_stop.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                stopScanning();
-//                stopSelf();
-//            }
-//        });
-//        btn_service.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                startScanning();
-//            }
-//        });
     }
 
     @Override
@@ -60,9 +48,6 @@ public class Service_Scan extends Service {
         received_time.clear();
         received_time_interval.clear();
         received_time_Calendar.clear();
-
-//        Log.e(TAG,"start scanning");
-
 
         list_device.clear();
         list_device_detail.clear();
@@ -96,14 +81,9 @@ public class Service_Scan extends Service {
         btn_service.setVisibility(View.INVISIBLE);
         btn_service_stop.setVisibility(View.VISIBLE);
 
-
-//        0x0209311BFFFFFF01226C74524A5F2D33353539343430393234393831323030
-
         byte[] data_all = new byte[ManufacturerData_size];
         System.arraycopy(id_byte, 0, data_all, 1, id_byte.length);
 
-//        System.arraycopy(data.toString().getBytes(), 0, data_all, id_byte.length, data.length());
-        // ManufacturerData : packet編號(1) + id(4) + data(19)
 
         byte[] data_mask = new byte[] {0x00,0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
         Log.e(TAG,"data_all: "+ byte2HexStr(data_all)+"\n"
@@ -116,12 +96,7 @@ public class Service_Scan extends Service {
 
         ScanSettings settings = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
-//                .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)  //Fails to start power optimized scan as this feature is not supported
-//                .setMatchMode()
-//                .setNumOfMatches(1)
-//                .setReportDelay()
                 .build();
-//        btScanner.flushPendingScanResults(leScanCallback);
         mBluetoothLeScanner.startScan(filters, settings, leScanCallback);
     }
 

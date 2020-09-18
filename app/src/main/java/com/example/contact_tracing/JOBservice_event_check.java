@@ -18,6 +18,7 @@ import static com.example.contact_tracing.Service_scan_function.rssi_level_3;
 import static com.example.contact_tracing.Service_scan_function.time_difference;
 
 
+//定時檢查是否有已經結束的接觸史
 public class JOBservice_event_check extends JobService {
     public JOBservice_event_check() {
         Log.e(TAG,"JOBservice_event_check");
@@ -38,7 +39,6 @@ public class JOBservice_event_check extends JobService {
         }
 
         if(!list.isEmpty()){
-//            Log.e(TAG,"list"+list);
             for (int i =list.size()-1 ; i>=0 ; i--){
                 int indexx = list.get(i);
                 contact_time_imei.remove(indexx);
@@ -49,17 +49,9 @@ public class JOBservice_event_check extends JobService {
                 rssi_level_3.remove(indexx);
             }
             list.clear();
-//            Log.e(TAG,"contact_time_imei"+contact_time_imei);
         }
 
         this.jobFinished(params,false);
-//        JobScheduler scheduler = (JobScheduler)getSystemService(Context.JOB_SCHEDULER_SERVICE);
-//        ComponentName name = new ComponentName(this, JOBservice_event_check.class);
-//        JobInfo job1 = new JobInfo.Builder(3, name)
-//                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-//                .setPersisted(true) // 重開機後是否執行
-//                .build();
-//        scheduler.schedule(job1);
         return true;
     }
 
